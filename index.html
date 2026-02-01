@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Obrigado | Homem Moderno</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Tag Manager -->
+    <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K6W4J8WP');
+    </script>
+
+    <!-- Meta Pixel Base -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '1396083662071466');
+    fbq('track', 'PageView');
+    </script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #0f1f17;
+            padding: 40px 30px;
+            width: 90%;
+            max-width: 420px;
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border: 1px solid #1b3527;
+        }
+        h1 { color: #4caf50; margin-bottom: 5px; font-size: 28px; }
+        .slogan { font-size: 13px; font-style: italic; color: #aaa; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        p { font-size: 15px; margin-bottom: 25px; line-height: 1.5; color: #ddd; }
+        input, button { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 8px; border: none; font-size: 16px; box-sizing: border-box; }
+        input { background: #000; border: 1px solid #2e4d3a; color: #fff; transition: 0.3s; }
+        input:focus { border-color: #4caf50; outline: none; }
+        button { background: #4caf50; color: #000; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        button:hover { background: #66bb6a; transform: translateY(-2px); }
+        button:disabled { background: #2e4d3a; cursor: not-allowed; }
+        .success-msg { color: #4caf50; display: none; margin-top: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K6W4J8WP" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<div class="container">
+    <h1>Homem Moderno</h1>
+    <div class="slogan">Não é sobre roupas, é sobre AUTOESTIMA.</div>
+
+    <p>Parabéns pela sua compra! <br> Confirme seus dados abaixo para finalizar o registro.</p>
+
+    <form id="purchaseForm">
+        <input type="text" id="name" placeholder="Nome Completo" required>
+        <input type="email" id="email" placeholder="Seu melhor e-mail" required>
+        <input type="tel" id="phone" placeholder="WhatsApp (com DDD)" required>
+        <button type="submit" id="btnSubmit">CONFIRMAR AGORA</button>
+    </form>
+    <div id="msg" class="success-msg">Sucesso! Redirecionando...</div>
+</div>
+
+<script>
+document.getElementById("purchaseForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    
+    // Elementos da interface
+    const btn = document.getElementById("btnSubmit");
+    const msg = document.getElementById("msg");
+    const linkRedirecionamento = "https://g.page/r/SUA_CHAVE_AQUI/review"; // TROQUE PELO SEU LINK DO GOOGLE
+
+    // Pegar valores
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+
+    // Feedback visual
+    btn.disabled = true;
+    btn.innerText = "PROCESSANDO...";
+
+    // 1. GTM DataLayer
+    window.dataLayer = window.dataLayer || [];
+    dataLayer.push({
+        'event': 'purchase',
+        'transaction_id': 'ID_' + new Date().getTime(), // Gera um ID único
+        'value': 1000,
+        'currency': 'BRL',
+        'customer_name': name,
+        'customer_email': email,
+        'customer_phone': phone
+    });
+
+    // 2. Meta Pixel (com Advanced Matching)
+    fbq('track', 'Purchase', {
+        value: 1000,
+        currency: 'BRL'
+    }, {
+        em: email.toLowerCase().trim(),
+        ph: phone.replace(/\D/g,''), // Remove parênteses e traços
+        fn: name.toLowerCase().trim()
+    });
+
+    // Mostrar mensagem de sucesso
+    msg.style.display = "block";
+
+    // Redirecionamento após 2.5 segundos
+    setTimeout(function(){
+        window.location.href = linkRedirecionamento;
+    }, 2500);
+});
+</script>
+
+</body>
+</html>
